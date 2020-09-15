@@ -1,4 +1,4 @@
-rootURL: 'https://linkchecktest.netlify.app'
+rootURL: 'https://link-check-test.netlify.app'
 fileIncludePatterns: 'content/**/*.mdx'
 bottlenecks:
   '*.wikipedia.org':
