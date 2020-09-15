@@ -1,7 +1,6 @@
 name: Link Check Deploy
 on:
-  check_run:
-    types: [completed]
+  - deployment
 
 jobs:
   run:
