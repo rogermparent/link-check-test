@@ -1,7 +1,7 @@
 name: Link Check Deploy
 on:
-  - deployment
-  - deployment_status
+  check_run:
+    types: [completed]
 
 jobs:
   run:
@@ -45,10 +45,10 @@ jobs:
 
       - name: Run Link Check
         id: run_check
-        uses: 'iterative/link-check.action@master'
+        uses: "iterative/link-check.action@master"
         with:
-          configFile: 'config/link-check/config.yml'
-          rootURL: '${{ github.event.deployment.payload.web_url }}'
+          configFile: "config/link-check/config.yml"
+          rootURL: "${{ github.event.deployment.payload.web_url }}"
           output: checksAction
 
       - uses: LouisBrunner/checks-action@v1.0.0
