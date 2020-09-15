@@ -1,6 +1,7 @@
 name: Link Check Deploy
 on:
-  - deployment
+  pull_request_review_comment:
+    types: [created]
 
 jobs:
   run:
