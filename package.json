@@ -6,7 +6,11 @@
     "develop": "gatsby develop",
     "start": "gatsby develop",
     "build": "gatsby build",
-    "clean": "gatsby clean"
+    "clean": "gatsby clean",
+    "link-check": "repo-link-check -c config/link-check/config.yml -s filesystem -u",
+    "link-check-diff": "repo-link-check -c config/link-check/config.yml",
+    "link-check-dev-server": "repo-link-check -c config/link-check/config.yml -r http://localhost:3000",
+    "link-check-exclude": "repo-link-check -c config/link-check/config.yml -s filesystem -u only"
   },
   "license": "0BSD",
   "dependencies": {
@@ -14,6 +18,7 @@
     "gatsby-theme-blog": "^2.0.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "repo-link-check": "^0.5.0",
     "theme-ui": "0.4.0-alpha.3"
   }
 }

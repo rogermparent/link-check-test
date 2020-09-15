@@ -1,0 +1,10 @@
+rootURL: 'https://linkchecktest.netlify.app'
+fileIncludePatterns: 'content/**/*.mdx'
+bottlenecks:
+  '*.wikipedia.org':
+    minTime: 2000
+    maxConcurrent: 1
+
+  '*.github.com':
+    minTime: 1000
+    maxConcurrent: 1
