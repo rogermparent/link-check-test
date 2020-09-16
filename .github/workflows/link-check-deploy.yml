@@ -19,6 +19,11 @@ jobs:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
 
+      - name: Dump Steps context
+        env:
+          STEPS_CONTEXT: ${{ toJson(steps) }}
+        run: echo "$STEPS_CONTEXT"
+
       - id: build-check
         uses: LouisBrunner/checks-action@v1.0.0
         with:
@@ -27,7 +32,7 @@ jobs:
           status: queued
 
       - name: Run Link Check
-        id: run-check
+        id: run-checker
         uses: "iterative/link-check.action@master"
         with:
           configFile: "config/link-check/config.yml"
@@ -40,8 +45,8 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           check_id: ${{ steps.build-check.outputs.check_id }}
           status: completed
-          conclusion: ${{ steps.run-check.outputs.conclusion }}
-          output: ${{ steps.run-check.outputs.output }}
+          conclusion: ${{ steps.run-checker.outputs.conclusion }}
+          output: ${{ steps.run-checker.outputs.output }}
 
       - uses: LouisBrunner/checks-action@v1.0.0
         if: ${{ failure() }}
