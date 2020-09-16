@@ -1,5 +1,6 @@
 rootURL: 'https://link-check-test.netlify.app'
 fileIncludePatterns: 'content/**/*.mdx'
+verbose: true
 bottlenecks:
   '*.wikipedia.org':
     minTime: 2000
