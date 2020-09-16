@@ -8,7 +8,7 @@ jobs:
   init:
     name: Initialize
     runs-on: ubuntu-latest
-    if: github.event_name == "pull_request"
+    if: github.event_name == 'pull_request'
     outputs:
       check_id: ${{ steps.build_check.check_id }}
     steps:
