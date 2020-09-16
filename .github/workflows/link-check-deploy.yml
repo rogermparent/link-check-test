@@ -3,13 +3,13 @@ on:
   check_suite:
     types: [completed]
 
-# Run only on Gatsby Cloud check suite completion
-if: github.event.check_suite.app.id == 24573
-
 jobs:
   run:
     name: Run
     runs-on: ubuntu-latest
+
+    # Run only on Gatsby Cloud check suite completion
+    if: github.event.check_suite.app.id == 24573
 
     steps:
       - uses: actions/checkout@v2
