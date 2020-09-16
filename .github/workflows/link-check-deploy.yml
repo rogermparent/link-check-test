@@ -1,47 +1,71 @@
 name: Link Check Deploy
 on:
-  - pull_request
-  - deployment_status
+  check_suite:
+    types: [completed]
 
 jobs:
   run:
     name: Run
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request' || github.event.deployment_status.state == 'success'
 
     steps:
-      - uses: actions/checkout@v2
+#      - uses: actions/checkout@v2
 
-      - id: build_check
-        uses: LouisBrunner/checks-action@v1.0.0
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          name: Report
-          status: queued
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+      - name: Dump job context
+        env:
+          JOB_CONTEXT: ${{ toJson(job) }}
+        run: echo "$JOB_CONTEXT"
+      - name: Dump steps context
+        env:
+          STEPS_CONTEXT: ${{ toJson(steps) }}
+        run: echo "$STEPS_CONTEXT"
+      - name: Dump runner context
+        env:
+          RUNNER_CONTEXT: ${{ toJson(runner) }}
+        run: echo "$RUNNER_CONTEXT"
+      - name: Dump strategy context
+        env:
+          STRATEGY_CONTEXT: ${{ toJson(strategy) }}
+        run: echo "$STRATEGY_CONTEXT"
+      - name: Dump matrix context
+        env:
+          MATRIX_CONTEXT: ${{ toJson(matrix) }}
+        run: echo "$MATRIX_CONTEXT"
 
-      - name: Run Link Check
-        id: check
-        uses: 'iterative/link-check.action@master'
-        with:
-          configFile: 'config/link-check/config.yml'
-          rootURL: '${{ github.event.deployment.payload.web_url }}'
-          output: checksAction
-
-      - uses: LouisBrunner/checks-action@v1.0.0
-        if: ${{ success() }}
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          check_id: ${{ steps.build_check.outputs.check_id }}
-          status: completed
-          conclusion: ${{ steps.check.outputs.conclusion }}
-          output: ${{ steps.check.outputs.output }}
-
-      - uses: LouisBrunner/checks-action@v1.0.0
-        if: ${{ failure() }}
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          check_id: ${{ steps.build_check.outputs.check_id }}
-          status: completed
-          conclusion: failure
-          output: >-
-            {"summary": "The Link Check script had an error!"}
+#      - id: build_check
+#        uses: LouisBrunner/checks-action@v1.0.0
+#        with:
+#          token: ${{ secrets.GITHUB_TOKEN }}
+#          name: Report
+#          status: queued
+#
+#      - name: Run Link Check
+#        id: run_check
+#        uses: "iterative/link-check.action@master"
+#        with:
+#          configFile: "config/link-check/config.yml"
+#          rootURL: "${{ github.event.deployment.payload.web_url }}"
+#          output: checksAction
+#
+#      - uses: LouisBrunner/checks-action@v1.0.0
+#        if: ${{ success() }}
+#        with:
+#          token: ${{ secrets.GITHUB_TOKEN }}
+#          check_id: ${{ steps.build_check.outputs.check_id }}
+#          status: completed
+#          conclusion: ${{ steps.build_check.outputs.conclusion }}
+#          output: ${{ steps.build_check.outputs.output }}
+#
+#      - uses: LouisBrunner/checks-action@v1.0.0
+#        if: ${{ failure() }}
+#        with:
+#          token: ${{ secrets.GITHUB_TOKEN }}
+#          check_id: ${{ steps.build_check.outputs.check_id }}
+#          status: completed
+#          conclusion: failure
+#          output: >-
+#            {"summary": "The Link Check script had an error!"}
