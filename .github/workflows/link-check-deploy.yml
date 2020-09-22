@@ -29,12 +29,16 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+
       - name: Run Link Check
         id: run-checker
         uses: "iterative/link-check.action@master"
         with:
           configFile: "config/link-check/config.yml"
-          rootURL: "${{ github.event.deployment.payload.web_url }}"
           output: checksAction
 
       - uses: LouisBrunner/checks-action@v1.0.0
