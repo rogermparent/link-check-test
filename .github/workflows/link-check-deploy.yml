@@ -42,6 +42,7 @@ jobs:
         uses: "iterative/link-check.action@master"
         with:
           configFile: "config/link-check/config.yml"
+          diff: true
           output: checksAction
 
       - uses: LouisBrunner/checks-action@v1.0.0
